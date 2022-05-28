@@ -55,7 +55,7 @@ namespace GameOfLife
                     {
                         locPoint = new Point((int)(x * numSSize.Value), (int)(y * numSSize.Value));
                         newCell = new Cell(locPoint, x, y);
-                        newCell.IsAlive = (random.Next(100) < 15) ? true : false;
+                        newCell.IsAlive = (random.Next(100) < 20) ? true : false;
                         // объект ячейки добавляется в список
                         Cell.gridCells.Add(newCell);
                     }
@@ -103,7 +103,6 @@ namespace GameOfLife
                     if (activeCount == 3)
                         cell.NextStatus = true;
                 }
-
             }
 
             foreach(Cell cell in Cell.gridCells)
@@ -124,13 +123,10 @@ namespace GameOfLife
                                 new Size((int)numSSize.Value - 1, (int)numSSize.Value - 1)));
                     }
                 }
-
                 pbGrid.Image.Dispose();
                 pbGrid.Image = (Bitmap)bmp.Clone();
             }
         }
-
-
 
         // класс - чертеж для каждого объекта ячейки, который появляется в сетке
         public class Cell
@@ -185,7 +181,6 @@ namespace GameOfLife
                 set { cNext = value; }
             }
 
-
             // функция для возврата количества активных соседних ячеек
             public int LiveAdjacent()
             {
@@ -230,8 +225,13 @@ namespace GameOfLife
                 GetNextState();
                 Application.DoEvents();
             }
-
         }
 
+        private void ConwayMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Необходимо, чтобы программа завершила работу при закрытии
+            InProgress=false;
+            Application.Exit();
+        }
     }
 }
